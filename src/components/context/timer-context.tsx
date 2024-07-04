@@ -1,17 +1,40 @@
-import { createContext } from "react";
+import { type ReactNode, createContext, useContext, useState } from "react";
 type Timer = {
   name: string;
   duration: number;
 };
 type TimerState = {
   isRunnig: boolean;
-  timer: number;
+  timer: number[];
 };
-
-type TimerContext = TimerState & {
+type TimerContextValue = TimerState & {
   addTimer: (timerData: Timer) => void;
   startTimer: () => void;
   stopTimer: () => void;
 };
 
-const TimeContext = createContext<TimerContext | null>(null);
+export const TimeContext = createContext<TimerContextValue | null>(null);
+export function useTimersContext() {
+  const timersCtx = useContext(TimeContext);
+
+  if (timersCtx == null) {
+    throw new Error("TimersContext is null - that should be the case!");
+  }
+  return timersCtx;
+}
+
+type TimeContextProviderProps = {
+  children: ReactNode;
+};
+export default function TimerContextProvider({
+  children,
+}: TimeContextProviderProps) {
+  const ctx: TimerContextValue = {
+    timer: [],
+    isRunnig: false,
+    addTimer(timerData) {},
+    stopTimer() {},
+    startTimer() {},
+  };
+  return <TimeContext.Provider value={ctx}>{children}</TimeContext.Provider>;
+}
