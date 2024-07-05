@@ -1,18 +1,18 @@
-import "./App.css";
-import AddTimer from "./components/AddTimer";
-import Header from "./components/Header";
-import Timer from "./components/Timer";
-import TimerContextProvider from "./components/context/Timer-context";
+import AddTimer from './components/AddTimer.tsx';
+import Header from './components/Header.tsx';
+import Timers from './components/Timers.tsx';
+import TimersContextProvider from './store/timers-context.tsx';
 
 function App() {
   return (
-    <TimerContextProvider>
+    <TimersContextProvider>
       <Header />
       <main>
         <AddTimer />
-        <Timer />
+        <Timers />
       </main>
-    </TimerContextProvider>
+    </TimersContextProvider>
   );
 }
+
 export default App;
